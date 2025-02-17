@@ -3,8 +3,8 @@ const errorHandler = (err, req, res, next) => {
 
     const statusCode = res.statusCode === 200 ? 500 : res.statusCode; // Jeśli status jest 200, ustaw 500
     res.status(statusCode).json({
-        message: err.message || 'Wewnętrzny błąd serwera',
-        stack: process.env.ERROR === 'production' ? null : err.stack, // W produkcji ukryj szczegóły błędu
+        message: 'Wewnętrzny błąd serwera',
+        stack: process.env.ERROR === 'production' ? null : '', // W produkcji ukryj szczegóły błędu
     });
 };
 

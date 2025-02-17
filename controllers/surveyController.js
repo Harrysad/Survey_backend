@@ -4,7 +4,7 @@ module.exports = {
   createSurvey: (req, res, next) => {
     const { title, description, questions } = req.body
 
-    console.log('User ID: ', req.user.userId)
+    // console.log('User ID: ', req.user.userId)
 
     const processedQuestions = questions.map((question) => {
       if (question.questionType === 'table') {
@@ -43,7 +43,7 @@ module.exports = {
       title,
       description,
       questions: processedQuestions,
-      createdBy: req.user.userId,
+      // createdBy: req.user.userId,
     })
 
     survey
