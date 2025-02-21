@@ -34,5 +34,19 @@ const GridSchema = new mongoose.Schema({
     }
 });
 
+const SurveySchema = new mongoose.Schema({
+    title: {
+        type: String,
+        required: true
+    },
+    description: {
+        type: String,
+        required: true
+    },
+    grid: {
+        type: GridSchema,
+        required: true
+    }
+});
 
-module.exports = mongoose.model('Grid', GridSchema);
+module.exports = mongoose.model('Survey', SurveySchema);

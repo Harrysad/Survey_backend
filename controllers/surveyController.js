@@ -2,61 +2,25 @@ const Survey = require('../models/Survey')
 
 module.exports = {
   createSurvey: (req, res, next) => {
-    const { title, description, questions } = req.body
+    const { title, description, grid } = req.body;
 
-    // console.log('User ID: ', req.user.userId)
+    const newSurvey = new Survey({
+        title,
+        description,
+        grid,
+    });
 
-    const processedQuestions = questions.map((question) => {
-      if (question.questionType === 'table') {
-        const { rows, columns } = question.table
-
-        if (columns.length === 2) {
-          question.table.columns = []
-        }
-
-        if (!rows || rows.length === 0) {
-          throw new Error('Tabela musi zawierać przynajmniej jeden wiersz.')
-        }
-
-        const formattedRows = rows.map((row) => ({
-          rowHeading: row.rowHeading || '',
-          cells: row.cells.map((cell) => {
-            if (!['checkbox', 'text', 'textarea'].includes(cell.type)) {
-              throw new Error(`Nieprawidłowy typ komórki: ${cell.type}`)
-            }
-            return {
-              type: cell.type,
-              value: cell.value,
-            }
-          }),
-        }))
-
-        question.table = {
-          columnHeadings: columns,
-          rows: formattedRows,
-        }
-      }
-      return question
-    })
-
-    const survey = new Survey({
-      title,
-      description,
-      questions: processedQuestions,
-      // createdBy: req.user.userId,
-    })
-
-    survey
+    newSurvey
       .save()
       .then((savedSurvey) => {
         res.status(201).json({
-          message: 'Ankieta została utworzona!',
+          message: "Ankieta została utworzona!",
           survey: savedSurvey,
-        })
+        });
       })
       .catch((error) => {
-        next(error)
-      })
+        next(error);
+      });
   },
   getSurveys: (req, res, next) => {
     Survey.find()
