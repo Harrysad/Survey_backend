@@ -11,6 +11,7 @@ const app = express();
 const authApiRoutes = require('./routes/authRoutes');
 const authTestApiRoutes = require('./routes/testApiRoutes');
 const surveyRoutes = require('./routes/surveyRoutes');
+const answersOfSurveyRoutes = require('./routes/answersOfSurveyRoutes');
 const errorHandler = require('./middleware/errorHandler');
 
 app.use(express.urlencoded({ extended: true }));
@@ -26,6 +27,7 @@ app.use(
 // app.use('/api/auth', authApiRoutes);
 // app.use('/api/test', authTestApiRoutes);
 app.use('/api/survey', surveyRoutes);
+app.use('/api/answersOfSurvey', answersOfSurveyRoutes);
 
 /* Error Middleware*/
 app.use(errorHandler)
